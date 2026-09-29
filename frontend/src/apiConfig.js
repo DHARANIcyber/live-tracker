@@ -3,17 +3,23 @@ const getApiBaseUrl = () => {
     return process.env.REACT_APP_API_BASE_URL.replace(/\/$/, '');
   }
 
-  if (typeof window !== 'undefined') {
-    // If running in development on port 3000/3001, route to backend on 5000
-    if (window.location.port === '3000' || window.location.port === '3001') {
-      return process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-    }
-
-    // For combined build, production, or shareable link, use current origin
-    return window.location.origin;
+  if (typeof window === 'undefined') {
+    return 'http://localhost:5000';
   }
 
-  return process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+  const { hostname, port, origin } = window.location;
+  const isLocalDevHost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0';
+  const isTunnelHost = hostname.includes('loca.lt') || hostname.includes('ngrok') || hostname.includes('trycloudflare.com');
+
+  if (port === '3000' || port === '3001' || isLocalDevHost) {
+    return 'http://localhost:5000';
+  }
+
+  if (isTunnelHost || origin) {
+    return origin;
+  }
+
+  return 'http://localhost:5000';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
