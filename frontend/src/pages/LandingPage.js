@@ -26,7 +26,7 @@ const LandingPage = () => {
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-100">College Bus Live Tracker</p>
             <h1 className="mt-3 text-4xl font-extrabold">{college.collegeName || 'Shree Venkateshwara Group of Institutions'}</h1>
             <p className="mt-4 max-w-2xl text-sm text-cyan-50">
-              Track every college bus in real time, monitor student boarding activity, and keep the campus commute safe and efficient.
+              Explore campus bus services, route details, and transport updates in one place.
             </p>
             <Link to="/login" className="mt-6 inline-flex rounded-xl bg-cyan-600 px-5 py-3 font-semibold text-white transition hover:bg-cyan-500">
               Login to continue
@@ -46,7 +46,7 @@ const LandingPage = () => {
         <div className="rounded-[1.75rem] border border-amber-200/70 bg-white/90 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur">
           <h2 className="text-2xl font-semibold">About the College</h2>
           <p className="mt-3 text-slate-600">
-            {college.collegeName || 'Shree Venkateshwara Group of Institutions'} offers seamless transport services across campus with live bus tracking, stop updates, and route management for students and parents.
+            {college.collegeName || 'Shree Venkateshwara Group of Institutions'} offers transport services across campus with stop updates and route management for students and parents.
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl bg-slate-50 p-4">
