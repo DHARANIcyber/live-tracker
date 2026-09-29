@@ -370,13 +370,20 @@ app.post('/login', async (req, res) => {
     return res.status(400).json({ message: 'Enter a valid email address.' });
   }
 
+  const isProduction = process.env.NODE_ENV === 'production';
   const users = {
-    admin: { email: 'admin@greenvalley.edu', password: 'admin1svgi' },
-    student: { email: 'student@gmail.com', password: 'student3svgi' }
+    admin: {
+      email: (isProduction ? process.env.ADMIN_EMAIL : 'admin@greenvalley.edu')?.trim().toLowerCase(),
+      password: isProduction ? process.env.ADMIN_PASSWORD : 'admin1svgi'
+    },
+    student: {
+      email: (isProduction ? process.env.STUDENT_EMAIL : 'student@gmail.com')?.trim().toLowerCase(),
+      password: isProduction ? process.env.STUDENT_PASSWORD : 'student3svgi'
+    }
   };
 
   const user = users[role];
-  const emailAllowed = process.env.NODE_ENV !== 'production' || user?.email === normalizedEmail;
+  const emailAllowed = !isProduction || user?.email === normalizedEmail;
   if (!user || !emailAllowed || user.password !== password) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
