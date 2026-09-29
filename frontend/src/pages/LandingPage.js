@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   const [summary] = useState({ totalBuses: 12, totalStudents: 320, activeBuses: 6, completedTrips: 84 });
   const [college] = useState({
     collegeName: 'Shree Venkateshwara Group of Institutions',
-    phone: '+91 98765 43210',
-    email: 'transport@svg.edu',
+    phone: '+91 98651 47777',
+    email: 'svhecgobi@gmail.com',
     address: 'Otthakkuthirai, Gobichettipalayam, Erode District, Tamil Nadu',
-    website: 'https://svg.edu'
+    website: 'https://www.svhec.com/'
   });
 
   const statCards = useMemo(() => [
@@ -27,11 +28,14 @@ const LandingPage = () => {
             <p className="mt-4 max-w-2xl text-sm text-cyan-50">
               Track every college bus in real time, monitor student boarding activity, and keep the campus commute safe and efficient.
             </p>
+            <Link to="/login" className="mt-6 inline-flex rounded-xl bg-cyan-600 px-5 py-3 font-semibold text-white transition hover:bg-cyan-500">
+              Login to continue
+            </Link>
           </div>
           <div className="rounded-2xl bg-white/15 p-6 backdrop-blur">
             <p className="text-sm">College Contact</p>
-            <p className="mt-2 font-semibold">{college.phone || '+91 98765 43210'}</p>
-            <p className="text-sm text-cyan-100">{college.email || 'transport@svg.edu'}</p>
+            <p className="mt-2 font-semibold">{college.phone || '+91 98651 47777'}</p>
+            <p className="text-sm text-cyan-100">{college.email || 'svhecgobi@gmail.com'}</p>
           </div>
         </div>
       </section>
@@ -51,58 +55,14 @@ const LandingPage = () => {
             </div>
             <div className="rounded-2xl bg-slate-50 p-4">
               <p className="text-sm font-semibold text-slate-500">Website</p>
-              <p className="mt-2 text-slate-700">{college.website || 'https://svg.edu'}</p>
-            </div>
-          </div>
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-slate-700 mb-4">Our Institutes</h3>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  key: 'svhec',
-                  name: 'Shree Venkateshwara Hi-Tech Engineering College (SVHEC)',
-                  desc:
-                    "Established in 2008. Autonomous, AICTE-approved, affiliated with Anna University, Chennai. NAAC 'A' grade and NBA accreditations for Civil, CSE, ECE, EEE, Mechanical.",
-                  url: college.website || 'https://svg.edu'
-                },
-                {
-                  key: 'svhpc',
-                  name: 'Shree Venkateshwara Hi-Tech Polytechnic College (SVHPC)',
-                  desc: 'Established in 2009 to provide practical diploma-level technical education.',
-                  url: college.website || 'https://svg.edu'
-                },
-                {
-                  key: 'svcas',
-                  name: 'Shree Venkateshwara Arts & Science College (SVCAS)',
-                  desc: 'Co-educational college founded in 2019, affiliated with Bharathiar University, Coimbatore.',
-                  url: college.website || 'https://svg.edu'
-                },
-                {
-                  key: 'medical',
-                  name: 'Medical & Paramedical Wings',
-                  desc: 'Includes colleges for Pharmacy, Physiotherapy, Nursing, Occupational Therapy, and Allied Health Sciences (from 2018).',
-                  url: college.website || 'https://svg.edu'
-                }
-              ].map((inst, idx) => (
-                <a
-                  key={inst.key}
-                  href={inst.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`block rounded-2xl p-4 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-150 ${
-                    idx === 0
-                      ? 'bg-gradient-to-br from-cyan-500 to-blue-600'
-                      : idx === 1
-                      ? 'bg-gradient-to-br from-emerald-500 to-green-600'
-                      : idx === 2
-                      ? 'bg-gradient-to-br from-violet-500 to-purple-600'
-                      : 'bg-gradient-to-br from-amber-400 to-orange-500'
-                  }`}
-                >
-                  <p className="text-sm font-bold">{inst.name}</p>
-                  <p className="mt-2 text-xs opacity-95">{inst.desc}</p>
-                </a>
-              ))}
+              <a
+                href={college.website || 'https://www.svhec.com/'}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-block text-cyan-700 underline decoration-cyan-300 underline-offset-4 transition hover:text-cyan-900"
+              >
+                {college.website || 'https://www.svhec.com/'}
+              </a>
             </div>
           </div>
         </div>

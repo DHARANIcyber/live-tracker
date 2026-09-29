@@ -1,15 +1,14 @@
-const syncBusLocation = async ({ app, busId, latitude, longitude, speed, status, timestamp, useMongo = false, busModel = null }) => {
+const syncBusLocation = async ({ app, busId, latitude, longitude, accuracy, status, timestamp, useMongo = false, busModel = null }) => {
   if (!busId) return null;
 
   if (useMongo && busModel) {
-    const query = { $or: [{ busNumber: busId }, { _id: busId }] };
     const updatedBus = await busModel.findOneAndUpdate(
-      query,
+      { _id: busId },
       {
         currentLocation: { latitude, longitude },
-        speed,
+        accuracy,
         status,
-        updatedAt: timestamp || new Date()
+        lastUpdated: timestamp || new Date()
       },
       { new: true }
     );
@@ -18,14 +17,14 @@ const syncBusLocation = async ({ app, busId, latitude, longitude, speed, status,
   }
 
   const buses = app.locals?.buses || [];
-  const bus = buses.find((item) => item.busNumber === busId || item._id === busId);
+  const bus = buses.find((item) => String(item._id) === String(busId));
 
   if (!bus) return null;
 
-  bus.currentLocation = { latitude, longitude };
-  bus.speed = speed;
-  bus.status = status;
-  bus.updatedAt = timestamp || new Date();
+  bus.currentLocation = { latitude: Number(latitude), longitude: Number(longitude) };
+  bus.accuracy = Number(accuracy);
+  bus.status = status || 'OFFLINE';
+  bus.lastUpdated = timestamp || new Date();
 
   app.locals.buses = buses;
   return bus;

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  email: { type: String, lowercase: true, trim: true },
   registerNumber: { type: String, required: true, unique: true },
   department: String,
   year: String,
@@ -10,3 +11,4 @@ const studentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Student', studentSchema);
+

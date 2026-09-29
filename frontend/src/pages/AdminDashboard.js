@@ -1,16 +1,24 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../apiConfig';
+import BusSearchBox from '../components/BusSearchBox';
 
 const AdminDashboard = () => {
   const [summary, setSummary] = useState({ totalBuses: 0, totalStudents: 0, activeBuses: 0, completedTrips: 0 });
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/dashboard-summary`).then((res) => setSummary(res.data));
+    const authUser = JSON.parse(localStorage.getItem('auth_user') || 'null');
+    axios.get(`${API_BASE_URL}/dashboard-summary`, {
+      headers: { Authorization: `Bearer ${authUser?.token || ''}` }
+    }).then((res) => setSummary(res.data));
   }, []);
 
   return (
     <div className="space-y-6">
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">Search buses</h2>
+        <BusSearchBox />
+      </section>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[
           ['Total Buses', summary.totalBuses],
